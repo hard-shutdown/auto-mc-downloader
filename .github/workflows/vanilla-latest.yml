@@ -1,5 +1,6 @@
 name: Latest, Vanilla Install and Compress
-on: [push]
+on:
+  - push
 jobs:
   mc-latest:
     runs-on: ubuntu-latest
@@ -8,20 +9,21 @@ jobs:
         uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: "3.10"
       - name: Install Requirements
         run: pip install -r requirements.txt
       - name: Get Latest MC Version
-        run: echo "mc_latest=$(python3 get_latest_mc_version.py release)" >> $GITHUB_ENV 
+        run: echo "mc_latest=$(python3 get_latest_mc_version.py release)" >> $GITHUB_ENV
       - name: Install MC Latest
-        run: mkdir -p mc-install && python3 install_mc_vanilla.py ${{ env.mc_latest }} mc-install
+        run: mkdir -p mc-install && python3 install_mc_vanilla.py ${{ env.mc_latest }}
+          mc-install
       - name: Compress
         run: cd mc-install && zip -r ${{ env.mc_latest }}_archive.zip .
       - name: Upload archive to release
         uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${mc_latest}_archive.zip
-        asset_name: ${{ env.mc_latest }}_archive.zip
-        tag: ${{ github.ref }}
-        overwrite: true
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${mc_latest}_archive.zip
+          asset_name: ${{ env.mc_latest }}_archive.zip
+          tag: ${{ github.ref }}
+          overwrite: true
