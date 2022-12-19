@@ -1,1 +1,1 @@
-mc-launcher-lib>=5.2
+minecraft-launcher-lib>=5.2
