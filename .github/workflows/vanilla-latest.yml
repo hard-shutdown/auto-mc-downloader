@@ -18,20 +18,10 @@ jobs:
       - name: Compress
         run: "cd mc-install && zip -r ${mc_latest}_archive.zip ." 
       - name: Upload archive to release
-      uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${mc_latest}_archive.zip
         asset_name: ${mc_latest}_archive.zip
         tag: ${{ github.ref }}
         overwrite: true
-      
-      
-      
-      
-      
-      
-      
-      
-      
-       
