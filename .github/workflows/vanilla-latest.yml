@@ -9,5 +9,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      - name: Install Requirements
+        run: "pip install -r requirements.txt"
       - name: Install MC Latest
         run: "mkdir -p /tmp/mc-install && python3 install_mc_vanilla.py /tmp/mc-install"
