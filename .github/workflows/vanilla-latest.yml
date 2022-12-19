@@ -11,5 +11,27 @@ jobs:
           python-version: '3.10'
       - name: Install Requirements
         run: "pip install -r requirements.txt"
+      - name: Get Latest MC Version
+        run: "mc_latest=$(python3 get_latest_mc_version.py release)" 
       - name: Install MC Latest
-        run: "mkdir -p /tmp/mc-install && python3 install_mc_vanilla.py /tmp/mc-install"
+        run: "mkdir -p mc-install && python3 install_mc_vanilla.py ${mc_latest} mc-install"
+      - name: Compress
+        run: "cd mc-install && zip -r ${mc_latest}_archive.zip ." 
+      - name: Upload archive to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${mc_latest}_archive.zip
+        asset_name: ${mc_latest}_archive.zip
+        tag: ${{ github.ref }}
+        overwrite: true
+      
+      
+      
+      
+      
+      
+      
+      
+      
+       
