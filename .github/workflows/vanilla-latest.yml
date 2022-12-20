@@ -2,7 +2,7 @@ name: Latest, Vanilla Install and Compress
 on:
   - push
 jobs:
-  mc-latest:
+  mc-latest-release:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -23,7 +23,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.mc_latest }}_archive.zip
+          file: mc-install/${{ env.mc_latest }}_archive.zip
           asset_name: ${{ env.mc_latest }}_archive.zip
           tag: ${{ github.ref }}
           overwrite: true
