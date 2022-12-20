@@ -15,12 +15,10 @@ jobs:
       - name: Get Latest MC Version
         run: echo "mc_latest=$(python3 get_latest_mc_version.py release)" >> $GITHUB_ENV
       - name: Install MC Latest
-        run: mkdir -p mc-install
-        run: python3 install_mc_vanilla_version.py ${{ env.mc_latest }}
+        run: mkdir -p mc-install && python3 install_mc_vanilla_version.py ${{ env.mc_latest }}
           mc-install
       - name: Compress
-        run: cd mc-install
-        run: zip -r ${{ env.mc_latest }}_archive.zip .
+        run: cd mc-install && zip -r ${{ env.mc_latest }}_archive.zip .
       - name: Upload archive to release
         uses: svenstaro/upload-release-action@v2
         with:
