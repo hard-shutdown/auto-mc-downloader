@@ -1,5 +1,5 @@
 name: Latest, Vanilla Install and Compress
-on:
+on: 
   - push
 jobs:
   mc-latest-release:

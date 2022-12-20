@@ -1,0 +1,32 @@
+name: Custom, Vanilla Install and Compress
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'MC Version'     
+        required: true
+        default: '1.8.9'
+jobs:
+  mc-latest-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install Requirements
+        run: pip install -r requirements.txt
+      - name: Install MC Latest
+        run: mkdir -p mc-install && python3 install_mc_vanilla_version.py ${{ github.event.inputs.version }}
+          mc-install
+      - name: Compress
+        run: cd mc-install && zip -r ${{ github.event.inputs.version }}_archive.zip .
+      - name: Upload archive to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: mc-install/${{ github.event.inputs.version }}_archive.zip
+          asset_name: ${{ github.event.inputs.version }}_archive.zip
+          tag: ${{ github.ref }}
+          overwrite: true
