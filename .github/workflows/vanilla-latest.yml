@@ -1,6 +1,7 @@
 name: Latest, Vanilla Install and Compress
 on: 
-  - push
+  schedule:
+    - cron: '59 23 * * 3'
 jobs:
   mc-latest-release:
     runs-on: ubuntu-latest
